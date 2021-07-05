@@ -19,12 +19,19 @@
 Sensor::Sensor(void) {
     data = 0.0;
     enable = false;
-    threadSampling.start(this->_loop);
+    threadSampling.start(callback(this, &Sensor::_loop));
+    this->queue = NULL;
+    this->processFnc = NULL;
+}
+
+Sensor::Sensor(EventQueue *queue, void (*processFnc)(float data)) {
+    this->queue = queue;
+    this->processFnc = processFnc;
 }
 
 void Sensor::start(std::chrono::milliseconds periodMs) {
     enable = false;
-    tickerEnable.attach(this->_setEnable, periodMs);
+    tickerEnable.attach(callback(this, &Sensor::_setEnable), periodMs);
 }
 
 void Sensor::stop(void) {
@@ -42,7 +49,10 @@ float Sensor::getData(void) { return data; }
 void Sensor::_loop(void) {
     while (true) {
         if (enable) {
-            sampleData();
+            _sampleData();
+            if (queue != nullptr && processFnc != nullptr) {
+                queue->call(processFnc, this->getData());
+            }
             enable = false;
         }
     }

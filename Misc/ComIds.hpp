@@ -1,6 +1,6 @@
 /**
  * Project: Power-Generation-Common
- * File: ComIds.cpp
+ * File: ComIds.hpp
  * Author: Matthew Yu
  * Organization: UT Solar Vehicles Team
  * Created on: May 25th, 2021

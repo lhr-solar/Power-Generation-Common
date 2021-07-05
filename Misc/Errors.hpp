@@ -1,12 +1,13 @@
 /**
  * Project: Power-Generation-Common
- * File: Errors.h
+ * File: Errors.hpp
  * Author: Matthew Yu (2021).
  * Created on: 06/12/21
  * Last Modified: 06/29/21
  * File Description: This file describes potential error codes for software
  * exceptions in user programs.
  */
+#pragma once
 
 /* Standard Error Codes 0 - 255 (2^8). */
 #define ERR_NONE                        0x00 /* No error has occurred. */

@@ -8,6 +8,7 @@
  * File Description: This file declares a Fifo class, which
  * can be used for message parsing.
  */
+#pragma once
 
 /** Includes. */
 #include <stdlib.h>
@@ -77,29 +78,28 @@ class Fifo {
         void _printQueue(void);
 };
 
-
-int testFifo() {
-    char buffer[5] = { 0 };
-    Fifo fifo = Fifo(buffer, 5);
-    fifo._printQueue();
-    fifo.enqueue('h');
-    fifo.enqueue('e');
-    fifo.enqueue('y');
-    fifo.enqueue('o');
-    if (!fifo.enqueue('!')) printf("Queue is full!\n");
+// int testFifo() {
+//     char buffer[5] = { 0 };
+//     Fifo fifo = Fifo(buffer, 5);
+//     fifo._printQueue();
+//     fifo.enqueue('h');
+//     fifo.enqueue('e');
+//     fifo.enqueue('y');
+//     fifo.enqueue('o');
+//     if (!fifo.enqueue('!')) printf("Queue is full!\n");
     
-    char out;
-    fifo.dequeue(out);
-    fifo.dequeue(out);
-    fifo.dequeue(out);
-    fifo.dequeue(out);
-    if (!fifo.dequeue(out)) printf("Queue is empty!\n");
+//     char out;
+//     fifo.dequeue(out);
+//     fifo.dequeue(out);
+//     fifo.dequeue(out);
+//     fifo.dequeue(out);
+//     if (!fifo.dequeue(out)) printf("Queue is empty!\n");
     
-    fifo.enqueue('a');
-    fifo.enqueue('b');
-    fifo.enqueue('c');
+//     fifo.enqueue('a');
+//     fifo.enqueue('b');
+//     fifo.enqueue('c');
 
-    char buffer2[5] = { 0 };
-    printf("Read %i chars: %s\n", fifo.peek(buffer2, 5), buffer2);
-    return 0;
-}
+//     char buffer2[5] = { 0 };
+//     printf("Read %i chars: %s\n", fifo.peek(buffer2, 5), buffer2);
+//     return 0;
+// }

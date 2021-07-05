@@ -11,21 +11,36 @@
  * The proposed sensor interface uses an independent thread to
  * execute non ISR interruptible routines. Routines can be initiated
  * by using an allocated LowPowerTicker to manage a periodic flag. 
+ * Users can either grab the data directly using getData or use an EventQueue
+ * to automatically process the sample (e.g. sending it out to COM. receivers).
  */
+#pragma once
 
 /** Includes. */
 #include "mbed.h"
 
 class Sensor {
-    private:
+    protected:
         float data;
         LowPowerTicker tickerEnable;
         Thread threadSampling;
         bool enable;
+        EventQueue * queue;
+        void (*processFnc)(float);
 
     public:
         /** Instantiates a new Sensor object. */
         Sensor(void);
+
+        /**
+         * Instantiates a new Sensor object that pushes a function call to
+         * an EventQueue upon completing a sample.
+         * 
+         * @param[in] queue Reference to the queue to push events to.
+         * @param[in] processFnc Callback that is pushed to the queue.
+         *            Must have an api of uint16_t msgId and float data.
+         */
+        Sensor(EventQueue *queue, void (*processFnc)(float data));
 
         /** 
          * Starts the sensor sampling routine at a fixed period, in ms.
@@ -56,7 +71,7 @@ class Sensor {
          */
         float getData(void);
     
-    private:
+    protected:
         /** 
          * User defined implementation to interrogate the sensor and retrieve
          * the latest sample data. 
